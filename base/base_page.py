@@ -10,10 +10,12 @@ class BasePage:
         self.wait = WebDriverWait(driver, 10, poll_frequency=1)
 
     def open(self):
-        self.driver.get(self.PAGE_URL)
+        with allure.step(f'Open {self.PAGE_URL} page'):
+            self.driver.get(self.PAGE_URL)
 
     def is_opened(self):
-        self.wait.until(EC.url_to_be(self.PAGE_URL))
+        with allure.step(f'Page {self.PAGE_URL} is opened'):
+            self.wait.until(EC.url_to_be(self.PAGE_URL))
 
     def make_screenshot(self, screenshot_name):
         allure.attach(
