@@ -26,4 +26,5 @@ class TestProfileFeature(BaseTest):
         self.personal_page.save_changes()
         self.personal_page.is_changes_saved()
         new_name = self.personal_page.get_employee_name()
+        self.personal_page.make_screenshot('Success')
         assert old_name != new_name, 'Name has not been changed'

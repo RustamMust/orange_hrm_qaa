@@ -4,6 +4,7 @@ import allure
 from base.base_page import BasePage
 from config.links import Links
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver import Keys
 
 
 class PersonalPage(BasePage):
@@ -17,7 +18,8 @@ class PersonalPage(BasePage):
     @allure.step('Change name')
     def change_name(self, new_name):
         first_name_field = self.wait.until(EC.element_to_be_clickable(self.FIRST_NAME_FIELD))
-        first_name_field.clear()
+        first_name_field.send_keys(Keys.COMMAND + 'A')
+        first_name_field.send_keys(Keys.BACKSPACE)
         first_name_field.send_keys(new_name)
         self.name = new_name
 
