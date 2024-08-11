@@ -1,3 +1,5 @@
+import time
+
 import allure
 from base.base_page import BasePage
 from config.links import Links
@@ -9,6 +11,8 @@ class PersonalPage(BasePage):
 
     FIRST_NAME_FIELD = ('xpath', '//input[@name="firstName"]')
     SAVE_BUTTON = ('xpath', '(//button[@type="submit"])[1]')
+    SPINNER = ('xpath', '//div[@class="oxd-loading-spinner"]')
+    EMPLOYEE_NAME = ('xpath', '//h6[@class="oxd-text oxd-text--h6 --strong"]')
 
     @allure.step('Change name')
     def change_name(self, new_name):
@@ -23,7 +27,12 @@ class PersonalPage(BasePage):
 
     @allure.step('Check is changes saved')
     def is_changes_saved(self):
-        self.wait.until(EC.text_to_be_present_in_element_value(self.FIRST_NAME_FIELD, self.name)).click()
+        self.wait.until(EC.invisibility_of_element_located(self.SPINNER))
+        self.wait.until(EC.visibility_of_element_located(self.FIRST_NAME_FIELD))
+        self.driver.refresh()
 
-
+    @allure.step('Get employee name')
+    def get_employee_name(self):
+        first_name_field = self.wait.until(EC.visibility_of_element_located(self.EMPLOYEE_NAME))
+        return first_name_field
 
